@@ -1,0 +1,52 @@
+import numpy as np
+import pandas as pd
+
+# Listas
+ts = [6.29, 6.37, 6.35, 6.62, 6.23, 6.39, 6.40, 6.29]
+ds = [10.06, 10.02, 10.09, 10.05, 9.78, 9.99, 9.69, 9.85]
+
+# Convertir listas de Python en arrays de NumPy
+ts = np.array(ts)
+ds = np.array(ds)
+
+# Promedios
+t_mean = np.mean(ts)
+d_mean = np.mean(ds)
+
+print("Promedio de ts:", t_mean)
+print("Promedio de ds:", d_mean)
+
+# Desviación Estándar
+t_std = np.std(ts, ddof=1)
+d_std = np.std(ds, ddof=1)
+
+print("Desviación estándar de ts:", t_std)
+print("Desviación estándar de ds:", d_std)
+
+# Velocidad
+vs = ds / ts
+
+print("Velocidad vs:", vs)
+
+# Promedio de velocidad
+v_mean = np.mean(vs)
+
+print("Promedio de la velocidad:", v_mean)
+
+# Cálculo de la varianza de V
+
+# Calcular términos
+ter1 = (1 / t_mean) * d_std
+ter2 = -(d_mean / t_mean ** 2) * t_std
+ter3_1 = (2 / (len(ts) - 1)) * (1 / t_mean) * (-d_mean / t_mean ** 2)
+ter3_2 = ((ds - d_mean) * (ts - t_mean)).sum()
+ter3 = ter3_1 * ter3_2
+
+# Varianza de V
+v_std = np.sqrt(ter1 ** 2 + ter2 ** 2 + ter3)
+print("Varianza de la velocidad (v_std):", v_std)
+
+# Cálculo de la varianza de una forma más fácil y exacta
+v_std2 = np.std(vs, ddof=1)
+print("Varianza de la velocidad (v_std2):", v_std2)
+
